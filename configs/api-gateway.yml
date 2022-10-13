@@ -1,0 +1,31 @@
+server:
+  port: 8080
+
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    registry-with-eureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: movieRoute
+          uri: lb://movie-service
+          predicates:
+            - Path=/movie/**
+        - id: catalogRoute
+          uri: lb://catalog-service        #lb se le pone el nombre del microservicio en vez de la url
+          predicates:
+            - Path=/catalog/**
+        - id: serieRoute
+          uri: lb://serie-service
+          predicates:
+            - Path=/series/**
+

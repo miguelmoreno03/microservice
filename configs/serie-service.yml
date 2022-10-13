@@ -1,0 +1,36 @@
+server:
+  port: 8003
+  servlet:
+    context-path: /series/
+
+spring:
+  data:
+    mongodb:
+      database: MiguelMoreno
+      port: 27017
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672
+
+    message: hello from serie-service
+queue:
+  series:
+    name: SeriesQueue
+
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

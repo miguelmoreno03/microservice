@@ -1,0 +1,50 @@
+server:
+  port: 8001
+  servlet:
+    context-path: /movie/
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    driverClassName: org.h2.Driver
+    username: sa
+    password: sa
+  jpa:
+    open-in-view: false
+    show-sql: true
+  hibernate:
+    ddl-auto: update
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.H2Dialect
+      format-sql: true
+  h2:
+    console:
+      enable: true
+      path: /h2-console
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    port: 5672
+
+    message: hello from movie-service
+  queue:
+    movies:
+      name: MoviesQueue
+
+
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+
+management:
+  web:
+    exposure:
+      include: '*'
